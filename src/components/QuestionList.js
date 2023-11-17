@@ -1,12 +1,34 @@
-import React from "react";
+import React from 'react';
 
-function QuestionList() {
+const QuestionList = ({ questions, onDelete, onUpdateCorrectAnswer }) => {
   return (
-    <section>
-      <h1>Quiz Questions</h1>
-      <ul>{/* display QuestionItem components here after fetching */}</ul>
-    </section>
+    <div>
+      <h2>Questions</h2>
+      <ul>
+        {questions.map((question) => (
+          <li key={question.id}>
+            {question.prompt}{' '}
+            <button onClick={() => onDelete(question.id)}>Delete Question</button>
+            <select
+              value={question.correctIndex}
+              onChange={(e) => onUpdateCorrectAnswer(question.id, e.target.value)}
+              aria-label={`Correct Answer for ${question.prompt}`}
+            >
+              {question.answers.map((answer, index) => (
+                <option key={index} value={index}>
+                  {answer}
+                </option>
+              ))}
+            </select>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-}
+};
 
 export default QuestionList;
+
+
+
+
